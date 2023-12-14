@@ -1,0 +1,63 @@
+{% load static %}
+<html  style="background:url({% static "fon.png" %}) no-repeat center center fixed;
+        background-color: #0f1161;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;">
+<head>
+	<title>Веб-журнал успеваемости студентов</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="robots" content="nocache">
+	<link rel="stylesheet" href="{% static "style/style_pages.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'style/style_ui_base.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'style/style_portfolio.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'style/animation1.css' %}" type="text/css">
+</head>
+<body>
+<header id="header">
+    <div>
+        <div>
+            <a class="title mytitle" href=""><img style="margin-right: 30px" src="{% static 'icons/logo.png' %}">Веб-журнал успеваемости студентов</a>
+        </div>
+            </div>
+</header>
+<div id="body" style="max-height: fit-content">
+<div class="area" >
+            <ul class="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+            </ul>
+    </div >
+<div class="loginbox loginclass">
+	<h3>Войти в учетную запись</h3>
+    {% if form.non_field_errors %}
+                    <div class="alert alert-danger" style="color: red" role="alert">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+	<form method="post" id="login_form">
+        {% csrf_token %}
+		<div><h3 style="margin: 0">Логин</h3>{{ form.username }}
+		</div>
+		<div>
+			<h3 style="margin: 0">Пароль</h3>{{ form.password}}
+		</div>
+		<input type="submit" style="height: 30px; margin-top: 30px" name="loginbtn" id="loginbtn" value="Вход">
+	</form>
+</div>
+
+</div>
+</body>
+</html>

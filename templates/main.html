@@ -1,0 +1,115 @@
+{% load static %}
+<html style="background:url({% static "fon.png" %}) no-repeat center center fixed;
+        background-color: #0f1161;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;">
+<head>
+    <title>Веб-журнал успеваемости студентов</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="robots" content="nocache">
+    <link rel="stylesheet" href="{% static "style/style_pages.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'style/style_ui_base.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'style/style_portfolio.css' %}" type="text/css">
+</head>
+<body>
+<header id="header">
+    <div>
+        <div>
+            <a class="title" href="">Веб-журнал успеваемости студентов</a>
+        </div>
+        <div class="div_user">{{ student.fio }} {{ student.name }}</div>
+        <div style="text-align: right; max-width: 35px;">
+            <a href="/logout"><img height="28px" width="28px" src="{% static "icons/exit-white.png" %}" alt="Выход"></a>
+        </div>
+    </div>
+</header>
+<div id="body">
+    <div id="div-main-transparent">
+         <div id="menu-portfolio">
+            <div class="active" style="max-width: 170px;">
+                <a href="#">
+                    <div><img src="{% static 'icons/data.png' %}"></div>
+                    <div><span>Мои<br>сведения</span></div>
+                </a>
+            </div>
+             <div class="no-active" style="max-width: 270px;">
+                <a href="{% url "raspisanie" %}">
+                    <div><img src="{% static 'icons/raspisanie.png' %}"></div>
+                    <div><span>Моё<br>расписание</span></div>
+                </a>
+            </div>
+            <div class="no-active" style="max-width: 190px;">
+                <a href="{% url "grade_current" %}">
+                     <div><img src="{% static 'icons/result.png' %}"></div>
+                    <div><span>Моя<br>успеваемость</span></div>
+                </a>
+            </div>
+            <div class="no-active" style="max-width: 270px;">
+                <a href="{% url "reiting" %}">
+                     <div><img src="{% static 'icons/reiting.png' %}"></div>
+                    <div><span>Мой<br>рейтинг</span></div>
+                </a>
+            </div>
+        </div>
+        <div id="portfolio-main-div">
+            <div class="section">
+                <div class="section-title"><a href="#">Сведения о студенте</a></div>
+                <div class="section-content">
+                    <div class="group-section">
+                        <div class="grid">
+                            <div class="grid-row">
+                                <div class="grid-cell-left">Фамилия</div>
+                                <div class="grid-cell"><b>{{ student.fio }}</b></div>
+                            </div>
+                            <div class="grid-row">
+                                <div class="grid-cell-left">Имя</div>
+                                <div class="grid-cell"><b>{{ student.name }}</b></div>
+                            </div>
+                            <div class="grid-row">
+                                <div class="grid-cell-left">Отчество</div>
+                                <div class="grid-cell"><b>{{ student.patronymic }}</b></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group-section">
+                        <div class="grid">
+                            <div class="grid-row">
+                                <div class="grid-cell-left">Учебное заведение</div>
+                                <div class="grid-cell">{{ student.vuz }}</div>
+                            </div>
+
+                            <div class="grid-row">
+                                <div class="grid-cell-left">Факультет</div>
+                                <div class="grid-cell">{{ student.faculty }}</div>
+                            </div>
+                            <div class="grid-row">
+                                <div class="grid-cell-left">Группа</div>
+                                <div class="grid-cell">{{ student.group.name }}</div>
+                            </div>
+                            <div class="grid-row">
+                                <div class="grid-cell-left">Направление подготовки (или специальность)</div>
+                                <div class="grid-cell">{{ student.group.special }}</div>
+                            </div>
+
+                            <div class="grid-row">
+                                <div class="grid-cell-left">Номер зачетной книжки</div>
+                                <div class="grid-cell">{{ student.zachnumber }}</div>
+                            </div>
+                            <div class="grid-row">
+                                <div class="grid-cell-left">Год поступления</div>
+                                <div class="grid-cell">{{ student.year }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

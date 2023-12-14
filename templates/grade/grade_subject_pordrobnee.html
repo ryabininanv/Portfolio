@@ -1,0 +1,127 @@
+{% load static %}
+<html style="background:url({% static "fon.png" %}) no-repeat center center fixed;
+        background-color: #0f1161;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;">
+<head>
+    <title>Веб-журнал успеваемости студентов</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="robots" content="nocache">
+    <link rel="stylesheet" href="{% static "style/style_pages.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'style/style_ui_base.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'style/style_portfolio.css' %}" type="text/css">
+    <script src="{% static 'js/Result.js' %}"></script>
+</head>
+<body>
+<header id="header">
+    <div>
+        <div>
+            <a class="title" href="">Веб-журнал успеваемости студентов</a>
+        </div>
+        <div class="div_user">{{ student.fio }} {{ student.name }}</div>
+        <div style="text-align: right; max-width: 35px;">
+            <a href="/logout"><img height="28px" width="28px" src="{% static "icons/exit-white.png" %}" alt="Выход"></a>
+        </div>
+    </div>
+</header>
+<div id="body">
+    <div id="div-main-transparent">
+        <div id="menu-portfolio">
+            <div class="no-active" style="max-width: 170px;">
+                <a href="{% url "home" %}">
+                    <div><img src="{% static 'icons/data.png' %}"></div>
+                    <div><span>Мои<br>сведения</span></div>
+                </a>
+            </div>
+            <div class="no-active" style="max-width: 270px;">
+                <a href="{% url "raspisanie" %}">
+                    <div><img src="{% static 'icons/raspisanie.png' %}"></div>
+                    <div><span>Моё<br>расписание</span></div>
+                </a>
+            </div>
+            <div class="active" style="max-width: 190px;">
+                <a href="#">
+                    <div><img src="{% static 'icons/result.png' %}"></div>
+                    <div><span>Моя<br>успеваемость</span></div>
+                </a>
+            </div>
+            <div class="no-active" style="max-width: 270px;">
+                <a href="{% url "reiting" %}">
+                    <div><img src="{% static 'icons/reiting.png' %}"></div>
+                    <div><span>Мой<br>рейтинг</span></div>
+                </a>
+            </div>
+        </div>
+        <div id="portfolio-main-div">
+            <table class="newsimpletable">
+                <tbody>
+                {% for subject in subjects %}
+                    <tr>
+                        <td>
+                            {% if subject == cursubjects %}
+                                <div>
+                                    <b> {{ subject.name_subject }}({{ subject.type }})<a
+                                            href="{% url "grade_current" %}"><img style="scale: 60%"
+                                                                                  src="{% static "icons/up.png" %}"></a></b>
+                                    {% if subject.link != None %}
+                                        <br>
+                                        <a style="background: #0b45ad; color: white; padding: 5px; font-size: 20px"
+                                           href="{{ subject.link }}">Перейти к предмету в системе Moodle</a>
+                                        <br>
+                                    {% endif %}
+                                    <br><i>Ведомость № {{ subject.numberved }} ({{ subject.vedstatus }})</i>
+                                    <br><i>Преподаватель:</i> {{ subject.teacher.get_short }}
+                                    <br><i>Текущие баллы:</i> {{ cur_ball }} (
+                                    {% if subject.type == "Зачет" %}
+                                        {% if cur_ball > 50 %}Зачет
+                                        {% else %} Неуд
+                                        {% endif %}
+                                    {% else %}
+                                        {% if cur_ball < 50 %} Неуд
+                                        {% elif cur_ball < 67 %} Удовлетворительно
+                                        {% elif cur_ball < 84 %} Хорошо
+                                        {% else %} Отлично
+                                        {% endif %}
+                                    {% endif %}
+                                    )
+                                    <br>
+                                    <br>
+                                    Текущий прогресс {{ cur_ball }}%
+                                    <br>
+                                    <progress value="{{ cur_ball }}" max="100"
+                                              style="height:30px;width:150px;"></progress>
+                                    <br>
+                                    <a href="{% url "grade_current_subject" %}?id={{ subject.id }}"
+                                       style="background-color: #0b45ad; color:white; padding: 5px">Скрыть</a>
+                                    <br>
+                                    <br>
+                                </div>
+                                {% if marks.exists %}
+                                    <div style="border: 2px black solid; width: fit-content; padding: 15px">
+                                        {% for mark in marks %}
+                                            {{ mark.note }}: {{ mark.mark }}<br><br>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    У вас пока-что нет баллов!
+                                {% endif %}
+                            {% else %}
+                                <b>{{ subject.name_subject }}({{ subject.type }}) <a
+                                        href="{% url "grade_current_subject" %}?id={{ subject.id }}"><img
+                                        style="scale: 60%" src="{% static "icons/down.png" %}"></a>
+                                </b>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
